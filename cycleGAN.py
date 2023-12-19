@@ -152,14 +152,13 @@ class CycleGAN(keras.Model):
         }
     
 
-# cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True,reduction=tf.keras.losses.Reduction.NONE)
-leaky_relu = tf.keras.losses.LeakyReLU(from_logits=True,reduction=tf.keras.losses.Reduction.NONE)
+cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True,reduction=tf.keras.losses.Reduction.NONE)
 
 # These are all the different loss functions used when training the model:
 
 def discriminator_loss(real,generated):
-    real_loss = leaky_relu(tf.ones_like(real),real)
-    generated_loss = leaky_relu(tf.zeros_like(generated),generated)
+    real_loss = cross_entropy(tf.ones_like(real),real)
+    generated_loss = cross_entropy(tf.zeros_like(generated),generated)
 
     total_loss = real_loss + generated_loss
 
@@ -167,7 +166,7 @@ def discriminator_loss(real,generated):
 
 def generator_loss(generated):
 
-    return leaky_relu(tf.ones_like(generated),generated)
+    return cross_entropy(tf.ones_like(generated),generated)
 
 def cycle_loss(real_image,cycled_image,LAMBDA):
 
