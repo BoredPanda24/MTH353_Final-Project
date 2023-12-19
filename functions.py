@@ -165,7 +165,7 @@ def upsample(filters,size,apply_dropout=False):
     if apply_dropout:
         result.add(layers.Dropout(0.5))
 
-    result.add(layers.ReLU())
+    result.add(layers.LeakyReLU())
     return result
 
 
@@ -200,7 +200,7 @@ def Generator():
                                   strides=2,
                                   padding='same',
                                   kernel_initializer=initializer,
-                                  activation='tanh')
+                                  activation='relu')
 
     # we'll create skip connections like a residual network
     x = inputs

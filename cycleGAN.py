@@ -150,11 +150,12 @@ class CycleGAN(keras.Model):
             "v_disc_loss": vangogh_disc_loss,
             "p_disc_loss": photo_disc_loss
         }
-    
 
-cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True,reduction=tf.keras.losses.Reduction.NONE)
 
 # These are all the different loss functions used when training the model:
+
+# For our loss functions, we are using Binary Cross Entropy
+cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True,reduction=tf.keras.losses.Reduction.NONE)
 
 def discriminator_loss(real,generated):
     real_loss = cross_entropy(tf.ones_like(real),real)
