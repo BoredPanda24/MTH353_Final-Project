@@ -132,7 +132,8 @@ def plot_images(style_images, normal_images):
 
 def downsample(filters,size,apply_instancenorm=True):
     '''
-    TODO: add explanation
+    This function generates a downsampling layer, which is a reduction in spatial resolution
+    while keeping the same 2d representation 
     '''
     initializer = tf.random_normal_initializer(0.,0.02)
     gamma_init = tf.keras.initializers.RandomNormal(mean=0.0,stddev=0.02)
@@ -149,7 +150,8 @@ def downsample(filters,size,apply_instancenorm=True):
 
 def upsample(filters,size,apply_dropout=False):
     '''
-    TODO: add explanation
+    This method generates an upsampling layer, which increases spacial resolution
+    while keeping the same 2d representation of an image
     '''
     initializer = tf.random_normal_initializer(0.,0.02)
     gamma_init = tf.keras.initializers.RandomNormal(mean=0.0,stddev=0.02)
@@ -171,6 +173,9 @@ def upsample(filters,size,apply_dropout=False):
 OUTPUT_CHANNELS = len(["Red","Green","Blue"])
 
 def Generator():
+    '''
+    Creates a new Generator
+    '''
     inputs = layers.Input([IMG_WIDTH,IMG_HEIGHT,3])
 
     down_stack = [downsample(128,4), # 64x64x128
@@ -216,6 +221,9 @@ def Generator():
     return keras.Model(inputs=inputs,outputs=x)
 
 def Discriminator():
+    '''
+    Creates a new Discriminator using LeakyRelu
+    '''
     initializer = tf.random_normal_initializer(0.,0.02)
     gamma_init = tf.keras.initializers.RandomNormal(mean=0.0,stddev=0.02)
 
@@ -243,6 +251,9 @@ def Discriminator():
     return keras.Model(inputs=inp,outputs=last)
 
 def get_images_from_local_folder():
+    '''
+    This method loads in all the images from the folder "our_images"
+    '''
     PATH = "our_images/*"
     filelist = glob(PATH)
     images = []

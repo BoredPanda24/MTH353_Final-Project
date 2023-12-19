@@ -2,18 +2,14 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 import tensorflow_datasets as tfds
-import tensorflow_addons as tfa
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 from glob import glob
-import os
 
 from functions import *
 from cycleGAN import CycleGAN
-
-from tensorflow.data.experimental import AUTOTUNE
 
 if __name__ == "__main__":
     # Loading the van gogh dataset from tensorflow
@@ -21,28 +17,14 @@ if __name__ == "__main__":
     train_van_gogh, train_photo = dataset['trainA'], dataset['trainB']
     test_van_gogh, test_photo = dataset['testA'], dataset['testB']
 
-    ############## testing preprocessing ##############
-
+    # Run preprocessing
     train_van_gogh = preprocess_training_dataeset(train_van_gogh)
     train_photo = preprocess_training_dataeset(train_photo)
 
     test_van_gogh = preprocess_testing_dataset(test_van_gogh)
     test_photo = preprocess_testing_dataset(test_photo)
     
-    sample_van_gogh = next(iter(train_van_gogh))
-    sample_photo = next(iter(train_photo))
-
-    plt.figure()
-    plt.imshow(sample_van_gogh[0][0] * 0.5 + 0.5)
-    plt.axis(False)
-    plt.figure()
-    plt.imshow(sample_photo[0][0]*0.5 + 0.5)
-    plt.axis(False)
-    # plt.show()
-
-    ############## end testing preprocessing ##############
-
-    # convert the tensorflow dataset into numpy arrays
+    # Convert the tensorflow dataset into numpy arrays
     style_images, labels = dataset_to_numpy(train_van_gogh)
     normal_images, labels = dataset_to_numpy(train_photo)
 
